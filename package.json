@@ -18,7 +18,7 @@
   "author": "IceHugh",
   "license": "MIT",
   "devDependencies": {
-    "@vercel/analytics": "^1.6.1",
+    "@theojs/lumen": "^6.4.5",
     "vitepress": "^1.6.4",
     "vue": "^3.5.29"
   }

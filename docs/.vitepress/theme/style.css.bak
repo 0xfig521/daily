@@ -378,7 +378,7 @@ pre code {
   line-height: var(--line-height-title);
   color: var(--color-text-primary);
   margin-top: 0;
-  margin-bottom: var(--spacing-3);
+  margin margin-bottom: var(--spacing-3);
   letter-spacing: -0.02em;
 }
 
