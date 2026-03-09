@@ -1,0 +1,25 @@
+{
+  "name": "daily",
+  "version": "1.0.0",
+  "description": "每日资讯 - Web3、AI、超级个体前沿资讯",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "keywords": [
+    "vitepress",
+    "web3",
+    "ai",
+    "opc",
+    "blog"
+  ],
+  "author": "IceHugh",
+  "license": "MIT",
+  "devDependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.29"
+  }
+}
