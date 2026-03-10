@@ -1,12 +1,13 @@
-# Daily 项目开发约定
+# 0xfig 项目开发约定
+
+**生成时间**: 2026-03-10
+**技术栈**: VitePress v1.6.4 + Vue 3 + Bun + @theojs/lumen v6.4.5
 
 ## 📋 项目信息
 
-- **名称**: 每日资讯
-- **技术栈**: VitePress + Vue 3 + Bun + Lumen
+- **名称**: 0xfig | 前沿科技资讯
+- **板块**: Web3、AI、OPC（超级个体）、Claw
 - **包管理器**: Bun (首选) / npm
-- **构建工具**: VitePress v1.6.4
-- **UI 组件库**: @theojs/lumen v6.4.5
 
 ## 🛠️ 开发命令
 
@@ -56,19 +57,23 @@ rm -rf node_modules bun.lockb && bun install
 ```
 daily/
 ├── docs/
-│   ├── .vitepress/
-│   │   ├── config.ts          # 站点配置
-│   │   ├── theme/
-│   │   │   ├── index.ts       # 主题入口
-│   │   │   └── style.css      # 全局样式
-│   │   └── dist/              # 构建输出
-│   ├── web3/                  # Web3 板块
-│   ├── ai/                    # AI 板块
-│   ├── opc/                   # 超级个体板块
-│   └── index.md               # 首页
-├── public/                    # 静态资源
+│   ├── .vitepress/          # 站点配置（config.ts + theme）
+│   │   ├── config.ts        # 导航/SEO/SSR 配置
+│   │   └── theme/
+│   │       ├── index.ts     # 主题入口（导入 Lumen 样式）
+│   │       └── style.css    # 全局样式
+│   ├── web3/                # Web3 板块（区块链/DeFi/NFT）
+│   ├── ai/                  # AI 板块（大模型/工具/应用）
+│   ├── opc/                 # 超级个体（一人公司/独立开发）
+│   ├── claw/                # Claw 板块（新增）
+│   └── index.md             # 首页（Features 导航）
+├── public/                  # 静态资源（favicon 等）
 └── package.json
 ```
+
+**⚠️ 文件命名规范**：
+- ✅ 标准：`YYYY-MM-DD-article-title.md`
+- ⚠️ 偏差：存在未遵循规范的无日期文件（如 `analysis.md`, `latest.md`, `tools.md`）
 
 ## 🎨 代码风格指南
 
@@ -120,49 +125,16 @@ import { Links, Underline, BoxCube, Pill, Card } from '@theojs/lumen'
 
 ### 组件使用规范
 
-**Underline 组件**：
-```vue
-<Underline color="brand" />
-<!-- color 选项：brand, accent, gray -->
-```
+**Lumen 组件**：
+- `<Underline color="brand" />` - 下划线装饰（color: brand/accent/gray）
+- `<Links :grid="3" :items={[...]}/>` - 链接网格（grid: 2/3/4）
+- `<BoxCube :items={[...]}/>` - 话题卡片
 
-**Links 组件**：
-```vue
-<Links
-  :grid="3"
-  :items="[
-    {
-      icon: { icon: 'logos:ethereum', color: '#627EEA' },
-      name: '以太坊',
-      desc: '描述',
-      link: 'https://ethereum.org/',
-      linkText: '访问'
-    }
-  ]"
-/>
-<!-- grid 选项：2, 3, 4 -->
-```
-
-**BoxCube 组件**：
-```vue
-<BoxCube
-  :items="[
-    { icon: '🌐', title: 'DeFi', desc: '去中心化金融' }
-  ]"
-/>
-```
-
-### Iconify 图标使用
-
+**Iconify 图标**：
 ```typescript
 // 格式：'{库名}:{图标名}'
 icon: { icon: 'logos:openai', color: '#412991' }
-
-// 常用图标库：
-// - logos: 品牌 logo
-// - bi: Bootstrap Icons
-// - mdi: Material Design Icons
-// - cryptologos: 加密货币 logo
+// 常用库：logos（品牌）, bi（Bootstrap）, mdi（Material）, cryptologos（加密货币）
 ```
 
 ### 错误处理
@@ -172,39 +144,17 @@ icon: { icon: 'logos:openai', color: '#412991' }
 2. 重新安装：`bun install`
 3. 重新构建：`bun run build`
 
-**Lumen 组件不显示**：
-1. 检查样式导入：`import '@theojs/lumen/style'`
-2. 确保在 `<script setup>` 中导入组件
-3. 检查 Lumen package.json 是否有 `./components` 导出
-
-### CSS 规范
-
-**使用 CSS 变量**：
-```css
-/* ✅ 正确 */
---font-size-h1: 4rem;
---color-primary: #007bff;
-
-/* ❌ 错误 - 不能使用花括号 */
---font-size-h1: { 4rem };
-```
-
-**样式优先级**：
-1. Lumen 默认样式
-2. 自定义 `theme/style.css`
-3. 组件内联样式
+**Lumen 组件不显示**：检查样式导入 `import '@theojs/lumen/style'`
 
 ### 内容创作流程
 
 **添加新文章**：
-
 ```bash
-# 1. 创建文件
+# 1. 创建文件（遵循 YYYY-MM-DD 格式）
 touch docs/web3/2025-03-09-article-title.md
 
-# 2. 编辑 Frontmatter
+# 2. 编辑 Frontmatter（title/description/date 必填）
 # 3. 编写内容
-# 4. 提交并推送
 ```
 
 **文章结构**：
@@ -217,13 +167,9 @@ tags: ['标签']
 ---
 
 # 主标题
-
 ## 副标题
-
 内容...
-
 ---
-
 > 引用或总结
 ```
 
@@ -232,11 +178,10 @@ tags: ['标签']
 ### SSR 配置
 
 确保 `config.ts` 中包含：
-
 ```typescript
 vite: {
   ssr: {
-    noExternal: ['@theojs/lumen']
+    noExternal: ['@theojs/lumen']  // 必需，否则构建失败
   }
 }
 ```
@@ -248,53 +193,13 @@ vite: {
 - ❌ 不要修改 Lumen 源码
 - ❌ 不要提交 `node_modules/` 或 `dist/`
 
-### 性能优化
-
-1. **图片优化**: 使用 WebP 格式
-2. **按需加载**: 只导入必要的组件
-3. **CDN 加速**: 外部资源使用 CDN
-
 ## 🚀 部署
 
-### Vercel 部署
-
-```bash
-# 自动部署：推送到 GitHub
-# 构建命令：bun run build
-# 输出目录：docs/.vitepress/dist
-```
-
-### 手动部署
-
-```bash
-# 1. 构建
-bun run build
-
-# 2. 上传 dist 目录到服务器
-```
-
-## 🔧 开发工具
-
-**推荐扩展**：
-- VS Code
-- Volar (Vue 3)
-- Prettier
-- ESLint
-- Markdown All in One
-
-**调试**：
-- VitePress DevTools
-- Vue DevTools
-
-## 📚 参考文档
-
-- [VitePress](https://vitepress.dev/)
-- [Lumen](https://lumen.theojs.cn/)
-- [Vue 3](https://vuejs.org/)
-- [Bun](https://bun.sh/)
-- [Iconify](https://icon-sets.iconify.design/)
+**Vercel**：推送 GitHub 自动部署
+- 构建命令：`bun run build`
+- 输出目录：`docs/.vitepress/dist`
 
 ---
 
-**最后更新**: 2025-03-09
+**最后更新**: 2026-03-10
 **维护者**: IceHugh

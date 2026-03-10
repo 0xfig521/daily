@@ -35,5 +35,10 @@ features:
     details: 一人公司、独立开发、数字游民生活方式，探索个体价值最大化的无限可能。
     link: /opc/
     linkText: 探索更多
+  - icon: 🦀
+    title: Claw 技术
+    details: OpenClaw 及 Claw 相关技术的最新动态，探索创新工具与生态发展。
+    link: /claw/
+    linkText: 探索更多
 
 ---

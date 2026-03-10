@@ -21,6 +21,7 @@ export default defineConfig({
       { text: 'Web3', link: '/web3/' },
       { text: 'AI', link: '/ai/' },
       { text: 'OPC', link: '/opc/' },
+      { text: 'Claw', link: '/claw/' },
     ],
 
     sidebar: {
@@ -48,6 +49,14 @@ export default defineConfig({
           ],
         },
       ],
+      '/claw/': [
+        {
+          text: 'Claw 资讯',
+          items: [
+            { text: '最新动态', link: '/claw/' },
+          ],
+        },
+      ],
     },
 
     socialLinks: [
@@ -61,21 +70,7 @@ export default defineConfig({
 
     search: {
       provider: 'local',
-      options: {
-        locales: {
-          zh: {
-            translations: {
-              button: '搜索',
-              buttonAriaLabel: '搜索',
-              modalNoResults: '无相关结果',
-              modalDisplayTitle: '搜索文档',
-            },
-          },
-        },
-      },
     },
-
-    appearance: 'dark',
   },
 
   vite: {
