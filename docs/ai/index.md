@@ -79,6 +79,6 @@ import { Links, Underline, BoxCube } from '@theojs/lumen'
 
 ## 🚀 最新动态
 
-待添加资讯内容...
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 
 > 💡 提示：在 `/docs/ai/` 目录下创建新的 Markdown 文件来添加资讯
