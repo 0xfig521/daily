@@ -65,13 +65,14 @@ const RSS_FEEDS = {
     indexFile: 'docs/opc/index.md',
     feeds: [
       // 英文源
-      { name: 'Indie Hackers', url: 'https://www.indiehackers.com/feed', lang: 'en' },
-      { name: 'Product Hunt', url: 'https://blog.producthunt.com/feed', lang: 'en' },
       { name: 'Hacker News', url: 'https://hnrss.org/frontpage', lang: 'en' },
       { name: 'Y Combinator', url: 'https://www.ycombinator.com/news/rss', lang: 'en' },
+      { name: 'Stratechery', url: 'https://stratechery.com/feed/', lang: 'en' },
+      { name: 'Not Boring', url: 'https://www.notboring.co/feed', lang: 'en' },
       // 中文源
       { name: '少数派', url: 'https://sspai.com/feed', lang: 'zh' },
-      { name: '36kr 创业', url: 'https://36kr.com/feed', lang: 'zh' },
+      { name: '36kr', url: 'https://36kr.com/feed', lang: 'zh' },
+      { name: '虎嗅', url: 'https://www.huxiu.com/rss/0.xml', lang: 'zh' },
     ]
   },
   web3: {
@@ -93,12 +94,12 @@ const RSS_FEEDS = {
   }
 };
 
-// 关键词过滤（用于判断是否属于该分类）
+// 关键词过滤（用于判断是否属于该分类，更宽松的匹配）
 const CATEGORY_KEYWORDS = {
-  ai: ['ai', 'artificial intelligence', 'machine learning', 'openai', 'gpt', 'claude', 'gemini', 'llm', '大模型', '人工智能', '深度学习', '神经网络', 'chatgpt', 'anthropic', 'google ai', 'meta ai'],
-  claw: ['openclaw', 'clawhub', 'clawdbot', 'moltbot', 'agent framework', 'ai agent', 'autonomous agent'],
-  opc: ['indie hacker', 'bootstrap', 'saas', 'solo founder', 'one person', 'startup', 'product hunt', 'side project', 'mrr', 'arr', '独立开发', '一人公司', '超级个体', '数字游民', '远程工作'],
-  web3: ['bitcoin', 'ethereum', 'defi', 'nft', 'dao', 'blockchain', 'crypto', 'web3', 'solana', 'layer2', 'token', '交易', '区块链', '加密货币', '去中心化']
+  ai: ['ai', 'artificial intelligence', 'machine learning', 'openai', 'gpt', 'claude', 'gemini', 'llm', '大模型', '人工智能', '深度学习', '神经网络', 'chatgpt', 'anthropic', 'google ai', 'meta ai', 'model', 'neural network', 'gpu', 'nvidia'],
+  claw: ['openclaw', 'clawhub', 'clawdbot', 'moltbot', 'moltbook', 'ai agent', 'autonomous', 'claude', 'openai', 'agent framework', 'skill', 'openclaw'],
+  opc: ['indie', 'bootstrap', 'saas', 'solo', 'startup', 'product hunt', 'side project', 'maker', 'founder', 'entrepreneur', 'freelance', 'remote', 'digital nomad', '独立开发', '一人公司', '超级个体', '数字游民', '创业', '商业', '盈利'],
+  web3: ['bitcoin', 'ethereum', 'defi', 'nft', 'dao', 'blockchain', 'crypto', 'web3', 'solana', 'layer2', 'token', 'trading', 'coin', '交易', '区块链', '加密货币', '去中心化', '钱包', '交易所']
 };
 
 // ============== 工具函数 ==============

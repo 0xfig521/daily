@@ -40,5 +40,10 @@ features:
     details: OpenClaw 及 Claw 相关技术的最新动态，探索创新工具与生态发展。
     link: /claw/
     linkText: 探索更多
+  - icon: 🔥
+    title: GitHub Trending
+    details: 每日热门开源项目排行榜，跟踪开发者社区的最新趋势与热门工具。
+    link: /github-trending/
+    linkText: 探索更多
 
 ---
