@@ -1,6 +1,5 @@
 ---
-# 0xfig | 前沿科技资讯
-
+title: 0xfig | 前沿科技资讯
 description: 0xfig 分享 Web3、AI 和超级个体相关的前沿资讯与深度洞察
 layout: home
 
@@ -20,6 +19,11 @@ hero:
       link: /about/
 
 features:
+  - icon: ☀️
+    title: 每日简报
+    details: 每日早间汇总，5 大分类资讯一站式阅读，开启高效一天。
+    link: /morning-brief/
+    linkText: 查看今日
   - icon: 🔗
     title: Web3 前沿
     details: 区块链、DeFi、NFT、DAO 等去中心化技术动态，把握 Web3 发展脉搏。
