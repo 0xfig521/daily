@@ -45,15 +45,19 @@ EOF
     echo "  获取: $url"
     
     local xml=$(curl -sL --max-time 30 "$url" 2>/dev/null)
-    local items=$(echo "$xml" | grep -oP '<item>.*?</item>' | head -10)
+    
+    # 处理 CDATA 和多行 XML
+    local items=$(echo "$xml" | tr '\n' ' ' | sed 's/<\/item>/\n<\/item>/g' | grep -oP '<item>.*?</item>' | head -10)
     
     for item in $items; do
-      local title=$(echo "$item" | grep -oP '(?<=<title>)[^<]+' | sed 's/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
+      # 提取标题（支持 CDATA）
+      local title=$(echo "$item" | grep -oP '(?<=<title>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
+      # 提取链接
       local link=$(echo "$item" | grep -oP '(?<=<link>)[^<]+' | head -1)
-      local desc=$(echo "$item" | grep -oP '(?<=<description>)[^<]+' | sed 's/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g' | sed 's/<[^>]*>//g' | cut -c1-200)
+      # 提取描述
+      local desc=$(echo "$item" | grep -oP '(?<=<description>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g; s/<[^>]*>//g' | cut -c1-200)
       
       [ -z "$title" ] || [ ${#title} -lt 5 ] && continue
-      echo "$title" | grep -qiE '^(techcrunch|36kr|coindesk|cointelegraph)$' && continue
       
       echo "### $title" >> "$output_file"
       echo "" >> "$output_file"
@@ -97,8 +101,6 @@ EOF
   local since=$(date -d '3 days ago' +%Y-%m-%d)
   
   curl -sL --max-time 30 "https://api.github.com/search/repositories?q=stars:>1000+pushed:>${since}&sort=stars&order=desc&per_page=20" -o "$tmpfile"
-  
-  local jq_fmt='\n### [{{full_name}}]({{url}})\n\n⭐ {{stars}} stars\n\n{{desc}}\n\n- 来源: {{url}}\n'
   
   while IFS= read -r repo; do
     full_name=$(echo "$repo" | jq -r '.full_name')
