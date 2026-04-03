@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily 资讯收集脚本 - 简化版
+# Daily 资讯收集脚本 - Python 解析 RSS
 
 set -e
 
@@ -11,6 +11,80 @@ echo "🦞 Daily 收集开始: $TODAY"
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
+
+# Python RSS 解析脚本
+cat > /tmp/rss_parser.py << 'PYTHON_SCRIPT'
+#!/usr/bin/env python3
+import sys
+import urllib.request
+import re
+import html
+
+def fetch_rss(url, limit=10):
+    try:
+        with urllib.request.urlopen(url, timeout=30) as response:
+            content = response.read().decode('utf-8', errors='ignore')
+    except Exception as e:
+        return []
+    
+    items = []
+    
+    # 统一处理 item 和 entry
+    item_pattern = re.compile(r'<(?:item|entry)>(.*?)</(?:item|entry)>', re.DOTALL)
+    title_pattern = re.compile(r'<title[^>]*>([^<]*)</title>', re.IGNORECASE)
+    link_pattern = re.compile(r'<link[^>]*>([^<]*)<\/link>', re.IGNORECASE)
+    desc_pattern = re.compile(r'<(?:description|summary|content)[^>]*>([^<]*)</(?:description|summary|content)>', re.IGNORECASE)
+    
+    for match in item_pattern.finditer(content):
+        item_xml = match.group(1)
+        
+        title = title_pattern.search(item_xml)
+        link = link_pattern.search(item_xml)
+        desc = desc_pattern.search(item_xml)
+        
+        if title:
+            title_text = html.unescape(title.group(1).strip())
+            title_text = re.sub(r'<!\[CDATA\[|\]\]>', '', title_text)
+            title_text = title_text[:200]
+            
+            link_text = link.group(1).strip() if link else ''
+            link_text = html.unescape(link_text)
+            
+            desc_text = ''
+            if desc:
+                desc_text = html.unescape(desc.group(1).strip())
+                desc_text = re.sub(r'<!\[CDATA\[|\]\]>', '', desc_text)
+                desc_text = re.sub(r'<[^>]+>', '', desc_text)
+                desc_text = desc_text[:200]
+            
+            if len(title_text) >= 5:
+                items.append({
+                    'title': title_text,
+                    'link': link_text,
+                    'desc': desc_text
+                })
+        
+        if len(items) >= limit:
+            break
+    
+    return items
+
+if __name__ == '__main__':
+    url = sys.argv[1] if len(sys.argv) > 1 else ''
+    limit = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+    
+    if not url:
+        print('Usage: python rss_parser.py <url> [limit]')
+        sys.exit(1)
+    
+    items = fetch_rss(url, limit)
+    
+    for item in items:
+        print(f"TITLE: {item['title']}")
+        print(f"LINK: {item['link']}")
+        print(f"DESC: {item['desc']}")
+        print("---")
+PYTHON_SCRIPT
 
 collect_rss() {
   local category=$1
@@ -44,31 +118,22 @@ EOF
   for url in "${urls[@]}"; do
     echo "  获取: $url"
     
-    local xml=$(curl -sL --max-time 30 "$url" 2>/dev/null)
-    [ -z "$xml" ] && continue
+    local items=$(python3 /tmp/rss_parser.py "$url" 10 2>/dev/null)
     
-    # 限制大小避免超时
-    xml="${xml:0:30000}"
-    
-    # 用 sed 提取 items/entries
-    echo "$xml" | tr '\n' ' ' | sed -E 's/<(item|entry)[^>]*>/\n<\1>\n/g' | grep -E '^<(item|entry)>' | head -10 | while read -r tag; do
-      # 提取标题
-      local title=$(echo "$xml" | sed -n "s/.*<$tag[^>]*>.*<title[^>]*>\\([^<]*\\)<\\/title>.*/\\1/p" | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
-      # 提取链接
-      local link=$(echo "$xml" | sed -n "s/.*<link[^>]*>[^<]*<\\/link>.*/\\1/p" | head -1)
-      # 提取描述
-      local desc=$(echo "$xml" | sed -n 's/.*<description[^>]*>\([^<]*\)<\/description>.*/\1/p' | head -1 | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/<[^>]*>//g' | cut -c1-150)
-      
-      [ -z "$title" ] || [ ${#title} -lt 5 ] && continue
-      
-      echo "### $title" >> "$output_file"
-      echo "" >> "$output_file"
-      [ -n "$desc" ] && echo "$desc" >> "$output_file" && echo "" >> "$output_file"
-      [ -n "$link" ] && echo "- 来源: [$link]($link)" >> "$output_file" || echo "- 来源: $url" >> "$output_file"
-      echo "" >> "$output_file"
-      
-      ((item_count++)) || true
-    done
+    while IFS= read -r line; do
+      if [[ "$line" == "TITLE: "* ]]; then
+        local title="${line#TITLE: }"
+        echo "### $title" >> "$output_file"
+        echo "" >> "$output_file"
+        ((item_count++)) || true
+      elif [[ "$line" == "LINK: "* ]]; then
+        local link="${line#LINK: }"
+        [ -n "$link" ] && echo "- 来源: [$link]($link)" >> "$output_file"
+      elif [[ "$line" == "DESC: "* ]]; then
+        local desc="${line#DESC: }"
+        [ -n "$desc" ] && echo "$desc" >> "$output_file" && echo "" >> "$output_file"
+      fi
+    done <<< "$items"
   done
   
   echo "" >> "$output_file"
@@ -140,9 +205,10 @@ collect_rss "web3" "Web3 资讯" "⛓️" \
   "https://cointelegraph.com/rss" \
   "https://decrypt.co/feed"
 
-# Claw 资讯 - GitHub releases
+# Claw 资讯
 collect_rss "claw" "Claw 资讯" "🦀" \
-  "https://github.com/openclaw/openclaw/releases.atom"
+  "https://github.com/openclaw/openclaw/releases.atom" \
+  "https://venturebeat.com/category/ai/feed/"
 
 # OPC 超级个体
 collect_rss "opc" "超级个体" "🚀" \
