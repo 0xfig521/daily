@@ -101,7 +101,8 @@ collect_github() {
 generate_morning_brief() {
   echo -e "\n${GREEN}[Morning Brief]${NC} 生成简报..." | tee -a "$LOG_FILE"
   
-  local output_file="$PROJECT_ROOT/docs/morning-brief.md"
+  mkdir -p "$PROJECT_ROOT/docs/morning-brief"
+  local output_file="$PROJECT_ROOT/docs/morning-brief/index.md"
   local total=${COUNTS[ai]:-0}+${COUNTS[web3]:-0}+${COUNTS[claw]:-0}+${COUNTS[opc]:-0}+${COUNTS[github]:-0}
   
   cat > "$output_file" << EOF
