@@ -22,7 +22,8 @@ import html
 
 def fetch_rss(url, limit=10):
     try:
-        with urllib.request.urlopen(url, timeout=30) as response:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=30) as response:
             content = response.read().decode('utf-8', errors='ignore')
     except Exception as e:
         return []
