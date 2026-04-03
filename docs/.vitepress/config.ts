@@ -55,11 +55,14 @@ export default defineConfig({
     
     nav: [
       { text: '首页', link: '/' },
+      { text: '☀️ 每日简报', link: '/morning-brief/' },
+      { text: '💡 灵感', link: '/indie-ideas/' },
       { text: 'Web3', link: '/web3/' },
       { text: 'AI', link: '/ai/' },
       { text: 'OPC', link: '/opc/' },
       { text: 'Claw', link: '/claw/' },
       { text: 'GitHub Trending', link: '/github-trending/' },
+      { text: 'About', link: '/about/' },
     ],
 
     sidebar: {
