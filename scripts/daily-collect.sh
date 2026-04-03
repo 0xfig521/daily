@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily 资讯收集脚本 - 使用 curl 抓取 RSS
+# Daily 资讯收集脚本 - 使用 curl 抓取 RSS 和 GitHub API
 # 直接生成 markdown 文件，不依赖 AI agent
 
 set -e
@@ -39,7 +39,7 @@ collect_rss() {
     curl -sL --max-time 30 "$url" >> "$tmp_file" 2>/dev/null || true
   done
   
-  # 解析 RSS 并生成 markdown（简化版）
+  # 生成 markdown
   local output_file="$output_dir/${TODAY}-daily.md"
   
   cat > "$output_file" << EOF
@@ -58,12 +58,10 @@ tags: ['$category', '每日资讯']
 
 EOF
   
-  # 提取项目（简化：只取标题和链接）
+  # 提取项目（简化版）
   grep -oP '(?<=<title>)[^<]+' "$tmp_file" | head -20 | while read -r title; do
-    # 跳过 RSS 本身标题
     echo "$title" | grep -qiE '^(techcrunch|36kr|coindesk|cointelegraph)$' && continue
     
-    # 清理标题
     title=$(echo "$title" | sed 's/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
     
     if [ ${#title} -gt 10 ]; then
@@ -87,7 +85,7 @@ for cat in ai web3; do
   collect_rss "$cat" "${RSS_FEEDS[$cat]}"
 done
 
-# 手动添加 GitHub Trending（通过 curl）
+# GitHub Trending via API
 echo -e "${GREEN}[github-trending]${NC} 开始收集..."
 GITHUB_OUTPUT="$PROJECT_ROOT/docs/github-trending/${TODAY}-daily.md"
 
@@ -103,19 +101,31 @@ tags: ['github', 'trending', '开源']
 
 > $TODAY | 热门开源项目
 
-## 今日热门项目
+## 今日热门项目（按星标数排序）
 
 EOF
 
-# 使用 curl 获取 GitHub trending 页面
-curl -sL --max-time 30 "https://github.com/trending" | grep -oP '(?<=<a href="/)[^"]+">[^<]+' | head -40 | while IFS='/' read -r owner repo; do
-  if [ -n "$repo" ] && [ "$owner" != "search" ]; then
-    echo "### $owner/$repo" >> "$GITHUB_OUTPUT"
-    echo "- 热门开源项目" >> "$GITHUB_OUTPUT"
-    echo "- 链接: https://github.com/$owner/$repo" >> "$GITHUB_OUTPUT"
-    echo "" >> "$GITHUB_OUTPUT"
-  fi
-done
+# 使用 GitHub API 获取近期热门项目
+# 按 stars 排序，获取近期更新的高星项目
+GITHUB_API="https://api.github.com/search/repositories?q=stars:>5000+pushed:>$(date -d '7 days ago' +%Y-%m-%d)&sort=stars&order=desc&per_page=20"
+
+curl -sL --max-time 30 "$GITHUB_API" | \
+  grep -oP '"full_name":"[^"]+"|"description":"[^"]*"|"stargazers_count":[0-9]+|"html_url":"[^"]*"' | \
+  while IFS= read -r line; do
+    echo "$line"
+  done | paste - - - - | while IFS=$'\t' read -r name desc stars url; do
+    name=$(echo "$name" | sed 's/"full_name":"//')
+    desc=$(echo "$desc" | sed 's/"description":"//' | sed 's/"//')
+    stars=$(echo "$stars" | sed 's/"stargazers_count"://')
+    url=$(echo "$url" | sed 's/"html_url":"//' | sed 's/"//')
+    
+    if [ -n "$name" ] && [ -n "$stars" ]; then
+      echo "### [$name]($url)" >> "$GITHUB_OUTPUT"
+      echo "" >> "$GITHUB_OUTPUT"
+      echo "⭐ $stars | $desc" >> "$GITHUB_OUTPUT"
+      echo "" >> "$GITHUB_OUTPUT"
+    fi
+  done
 
 echo "*由 Daily RSS 收集器自动生成*" >> "$GITHUB_OUTPUT"
 echo -e "${YELLOW}[github-trending]${NC} 已保存: $GITHUB_OUTPUT"
@@ -125,7 +135,6 @@ for cat in ai web3 github-trending; do
   INDEX="$PROJECT_ROOT/docs/$cat/index.md"
   if [ -f "$INDEX" ]; then
     if ! grep -q "${TODAY}-daily.md" "$INDEX"; then
-      # 简单地在文件末尾添加链接
       echo "- [$TODAY 资讯](./${TODAY}-daily.md)" >> "$INDEX"
       echo "更新 $cat index.md"
     fi
@@ -137,7 +146,11 @@ cd "$PROJECT_ROOT"
 git config user.email "openclaw@daily.bot" 2>/dev/null || true
 git config user.name "OpenClaw Daily Bot" 2>/dev/null || true
 git add .
-git commit -m "📰 Daily: $TODAY 自动收集" 2>/dev/null || echo "没有更改需要提交"
-git push origin main 2>/dev/null || echo "推送失败"
+if git diff --cached --quiet; then
+  echo "没有更改需要提交"
+else
+  git commit -m "📰 Daily: $TODAY 自动收集"
+  git push origin main || echo "推送失败"
+fi
 
 echo -e "${GREEN}✅ 完成!${NC}"
