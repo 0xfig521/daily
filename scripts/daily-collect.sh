@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily 资讯收集脚本 - 完整版
+# Daily 资讯收集脚本 - 优化版
 
 set -e
 
@@ -45,17 +45,18 @@ EOF
     echo "  获取: $url"
     
     local xml=$(curl -sL --max-time 30 "$url" 2>/dev/null)
+    [ -z "$xml" ] && continue
     
-    # 处理多行 XML - 先将换行符替换为空格，然后用 <item> 作为分隔符
-    local items=$(echo "$xml" | tr '\n' ' ' | sed 's/<item>/\n<item>/g' | grep '<item>' | head -10)
+    # 处理多行 XML - 支持 RSS <item> 和 Atom <entry>
+    # 只取前 50000 字符避免超时
+    xml="${xml:0:50000}"
+    
+    local items=$(echo "$xml" | tr '\n' ' ' | sed -E 's/<(item|entry)>/\n<\1>/g' | grep -E '<(item|entry)>' | head -10)
     
     for item in $items; do
-      # 提取标题
       local title=$(echo "$item" | grep -oP '(?<=<title>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
-      # 提取链接
-      local link=$(echo "$item" | grep -oP '(?<=<link>)[^<]+' | head -1)
-      # 提取描述
-      local desc=$(echo "$item" | grep -oP '(?<=<description>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g; s/<[^>]*>//g' | cut -c1-200)
+      local link=$(echo "$item" | grep -oP '(?<=<link[^>]*>)[^<]+' | head -1)
+      local desc=$(echo "$item" | grep -oP '(?<=<(description|content|summary)>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g; s/<[^>]*>//g' | cut -c1-200)
       
       [ -z "$title" ] || [ ${#title} -lt 5 ] && continue
       
@@ -138,11 +139,9 @@ collect_rss "web3" "Web3 资讯" "⛓️" \
   "https://cointelegraph.com/rss" \
   "https://decrypt.co/feed"
 
-# Claw 资讯
+# Claw 资讯 - 只取 GitHub releases
 collect_rss "claw" "Claw 资讯" "🦀" \
-  "https://github.com/openclaw/openclaw/releases.atom" \
-  "https://www.theverge.com/rss/index.xml" \
-  "https://venturebeat.com/category/ai/feed/"
+  "https://github.com/openclaw/openclaw/releases.atom"
 
 # OPC 超级个体
 collect_rss "opc" "超级个体" "🚀" \
