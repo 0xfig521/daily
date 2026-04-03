@@ -51,7 +51,7 @@ export default defineConfig({
 
   themeConfig: {
     title: '0xfig',
-    logo: '/logo.png',
+    logo: '/logo.svg',
     
     nav: [
       { text: '首页', link: '/' },
