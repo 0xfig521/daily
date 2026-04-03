@@ -16,6 +16,7 @@ import { Links, Underline } from '@theojs/lumen'
 
 ## 📰 最新灵感
 
+- [2026-04-03 一觉醒来 OpenClaw 给我赚了100万](./2026-04-03-one-hundred-million.md) 🆕 科幻文
 - [2026-04-03 OpenClaw 自主赚钱指南](./2026-04-03-openclaw-monetization.md) 🆕
 - [2026-04-03 硅基宠物园](./2026-04-03-silicon-pet-park.md) 🆕
 - [2026-04-03 灵感](./2026-04-03-ideas.md)
