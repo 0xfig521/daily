@@ -9,7 +9,7 @@ hero:
   text: 探索前沿科技与个体价值
   tagline: Web3 · AI · 超级个体 | 把握去中心化未来的无限可能
   image:
-    src: /logo.svg
+    src: /logo.jpg
     alt: 0xfig Logo
   actions:
     - theme: brand
