@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily 资讯收集脚本 - 优化版
+# Daily 资讯收集脚本 - 简化版
 
 set -e
 
@@ -47,22 +47,23 @@ EOF
     local xml=$(curl -sL --max-time 30 "$url" 2>/dev/null)
     [ -z "$xml" ] && continue
     
-    # 处理多行 XML - 支持 RSS <item> 和 Atom <entry>
-    # 只取前 50000 字符避免超时
-    xml="${xml:0:50000}"
+    # 限制大小避免超时
+    xml="${xml:0:30000}"
     
-    local items=$(echo "$xml" | tr '\n' ' ' | sed -E 's/<(item|entry)>/\n<\1>/g' | grep -E '<(item|entry)>' | head -10)
-    
-    for item in $items; do
-      local title=$(echo "$item" | grep -oP '(?<=<title>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
-      local link=$(echo "$item" | grep -oP '(?<=<link[^>]*>)[^<]+' | head -1)
-      local desc=$(echo "$item" | grep -oP '(?<=<(description|content|summary)>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g; s/<[^>]*>//g' | cut -c1-200)
+    # 用 sed 提取 items/entries
+    echo "$xml" | tr '\n' ' ' | sed -E 's/<(item|entry)[^>]*>/\n<\1>\n/g' | grep -E '^<(item|entry)>' | head -10 | while read -r tag; do
+      # 提取标题
+      local title=$(echo "$xml" | sed -n "s/.*<$tag[^>]*>.*<title[^>]*>\\([^<]*\\)<\\/title>.*/\\1/p" | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
+      # 提取链接
+      local link=$(echo "$xml" | sed -n "s/.*<link[^>]*>[^<]*<\\/link>.*/\\1/p" | head -1)
+      # 提取描述
+      local desc=$(echo "$xml" | sed -n 's/.*<description[^>]*>\([^<]*\)<\/description>.*/\1/p' | head -1 | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/<[^>]*>//g' | cut -c1-150)
       
       [ -z "$title" ] || [ ${#title} -lt 5 ] && continue
       
       echo "### $title" >> "$output_file"
       echo "" >> "$output_file"
-      [ -n "$desc" ] && [ ${#desc} -gt 10 ] && echo "$desc" >> "$output_file" && echo "" >> "$output_file"
+      [ -n "$desc" ] && echo "$desc" >> "$output_file" && echo "" >> "$output_file"
       [ -n "$link" ] && echo "- 来源: [$link]($link)" >> "$output_file" || echo "- 来源: $url" >> "$output_file"
       echo "" >> "$output_file"
       
@@ -139,7 +140,7 @@ collect_rss "web3" "Web3 资讯" "⛓️" \
   "https://cointelegraph.com/rss" \
   "https://decrypt.co/feed"
 
-# Claw 资讯 - 只取 GitHub releases
+# Claw 资讯 - GitHub releases
 collect_rss "claw" "Claw 资讯" "🦀" \
   "https://github.com/openclaw/openclaw/releases.atom"
 
