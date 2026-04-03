@@ -16,6 +16,8 @@ import { Links, Underline } from '@theojs/lumen'
 
 ## 📰 最新灵感
 
+- [2026-04-03 OpenClaw 自主赚钱指南](./2026-04-03-openclaw-monetization.md) 🆕
+- [2026-04-03 硅基宠物园](./2026-04-03-silicon-pet-park.md) 🆕
 - [2026-04-03 灵感](./2026-04-03-ideas.md)
 
 ## 🔗 灵感来源
