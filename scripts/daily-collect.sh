@@ -1,10 +1,12 @@
 #!/bin/bash
-# Daily 资讯收集脚本 - Python 解析 RSS
+# Daily 资讯收集脚本
 
 set -e
 
 PROJECT_ROOT="/root/.openclaw/workspace/daily"
 TODAY=$(date +%Y-%m-%d)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PYTHON_SCRIPT="$SCRIPT_DIR/rss_to_md.py"
 
 echo "🦞 Daily 收集开始: $TODAY"
 
@@ -12,81 +14,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-# Python RSS 解析脚本
-cat > /tmp/rss_parser.py << 'PYTHON_SCRIPT'
-#!/usr/bin/env python3
-import sys
-import urllib.request
-import re
-import html
-
-def fetch_rss(url, limit=10):
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=30) as response:
-            content = response.read().decode('utf-8', errors='ignore')
-    except Exception as e:
-        return []
-    
-    items = []
-    
-    # 统一处理 item 和 entry
-    item_pattern = re.compile(r'<(?:item|entry)>(.*?)</(?:item|entry)>', re.DOTALL)
-    title_pattern = re.compile(r'<title[^>]*>([^<]*)</title>', re.IGNORECASE)
-    link_pattern = re.compile(r'<link[^>]*>([^<]*)<\/link>', re.IGNORECASE)
-    desc_pattern = re.compile(r'<(?:description|summary|content)[^>]*>([^<]*)</(?:description|summary|content)>', re.IGNORECASE)
-    
-    for match in item_pattern.finditer(content):
-        item_xml = match.group(1)
-        
-        title = title_pattern.search(item_xml)
-        link = link_pattern.search(item_xml)
-        desc = desc_pattern.search(item_xml)
-        
-        if title:
-            title_text = html.unescape(title.group(1).strip())
-            title_text = re.sub(r'<!\[CDATA\[|\]\]>', '', title_text)
-            title_text = title_text[:200]
-            
-            link_text = link.group(1).strip() if link else ''
-            link_text = html.unescape(link_text)
-            
-            desc_text = ''
-            if desc:
-                desc_text = html.unescape(desc.group(1).strip())
-                desc_text = re.sub(r'<!\[CDATA\[|\]\]>', '', desc_text)
-                desc_text = re.sub(r'<[^>]+>', '', desc_text)
-                desc_text = desc_text[:200]
-            
-            if len(title_text) >= 5:
-                items.append({
-                    'title': title_text,
-                    'link': link_text,
-                    'desc': desc_text
-                })
-        
-        if len(items) >= limit:
-            break
-    
-    return items
-
-if __name__ == '__main__':
-    url = sys.argv[1] if len(sys.argv) > 1 else ''
-    limit = int(sys.argv[2]) if len(sys.argv) > 2 else 10
-    
-    if not url:
-        print('Usage: python rss_parser.py <url> [limit]')
-        sys.exit(1)
-    
-    items = fetch_rss(url, limit)
-    
-    for item in items:
-        print(f"TITLE: {item['title']}")
-        print(f"LINK: {item['link']}")
-        print(f"DESC: {item['desc']}")
-        print("---")
-PYTHON_SCRIPT
-
+# 收集函数
 collect_rss() {
   local category=$1
   local name=$2
@@ -100,6 +28,7 @@ collect_rss() {
   mkdir -p "$output_dir"
   local output_file="$output_dir/${TODAY}-daily.md"
   
+  # 先创建空文件（带frontmatter）
   cat > "$output_file" << EOF
 ---
 title: $name $TODAY
@@ -114,84 +43,42 @@ tags: ['$category', '$name', '每日资讯']
 
 EOF
 
-  local item_count=0
+  local total_count=0
   
   for url in "${urls[@]}"; do
     echo "  获取: $url"
+    local tmpfile="/tmp/rss_${category}_$$.md"
     
-    local items=$(python3 /tmp/rss_parser.py "$url" 10 2>/dev/null)
+    python3 "$PYTHON_SCRIPT" rss "$url" "$category" "$name" "$emoji" "$tmpfile" 10 2>/dev/null
     
-    while IFS= read -r line; do
-      if [[ "$line" == "TITLE: "* ]]; then
-        local title="${line#TITLE: }"
-        echo "### $title" >> "$output_file"
-        echo "" >> "$output_file"
-        ((item_count++)) || true
-      elif [[ "$line" == "LINK: "* ]]; then
-        local link="${line#LINK: }"
-        [ -n "$link" ] && echo "- 来源: [$link]($link)" >> "$output_file"
-      elif [[ "$line" == "DESC: "* ]]; then
-        local desc="${line#DESC: }"
-        [ -n "$desc" ] && echo "$desc" >> "$output_file" && echo "" >> "$output_file"
-      fi
-    done <<< "$items"
+    if [ -f "$tmpfile" ]; then
+      # 跳过 frontmatter 和标题部分，追加内容
+      sed -n '16,$p' "$tmpfile" >> "$output_file" 2>/dev/null
+      local count=$(grep -c "^### " "$tmpfile" 2>/dev/null || echo 0)
+      total_count=$((total_count + count))
+      rm -f "$tmpfile"
+    fi
   done
   
   echo "" >> "$output_file"
   echo "*由 Daily 自动收集生成*" >> "$output_file"
   
-  echo -e "  ${YELLOW}收集 $item_count 条${NC}"
+  echo -e "  ${YELLOW}收集 $total_count 条${NC}"
   echo -e "  ${YELLOW}已保存: $output_file${NC}"
 }
 
+# 收集 GitHub Trending
 collect_github() {
   echo -e "${GREEN}[GitHub Trending]${NC} 开始收集..."
   
   local output_file="$PROJECT_ROOT/docs/github-trending/${TODAY}-daily.md"
   
-  cat > "$output_file" << EOF
----
-title: GitHub Trending $TODAY
-date: $TODAY
-description: GitHub 热门项目每日排行
-tags: ['github', 'trending', '开源']
----
-
-# GitHub Trending 🔥
-
-> $TODAY | 热门开源项目
-
-## 今日热门项目
-
-EOF
-
-  local tmpfile="/tmp/github_trending_$$.json"
-  local since=$(date -d '3 days ago' +%Y-%m-%d)
-  
-  curl -sL --max-time 30 "https://api.github.com/search/repositories?q=stars:>1000+pushed:>${since}&sort=stars&order=desc&per_page=20" -o "$tmpfile"
-  
-  while IFS= read -r repo; do
-    full_name=$(echo "$repo" | jq -r '.full_name')
-    url=$(echo "$repo" | jq -r '.html_url')
-    stars=$(echo "$repo" | jq -r '.stargazers_count')
-    desc=$(echo "$repo" | jq -r '.description // "暂无描述"')
-    
-    echo "### [$full_name]($url)" >> "$output_file"
-    echo "" >> "$output_file"
-    echo "⭐ $stars stars" >> "$output_file"
-    echo "" >> "$output_file"
-    echo "$desc" >> "$output_file"
-    echo "" >> "$output_file"
-    echo "- 来源: [$url]($url)" >> "$output_file"
-    echo "" >> "$output_file"
-  done < <(jq -c '.items[]' "$tmpfile")
-  
-  rm -f "$tmpfile"
-  
-  echo "*由 Daily 自动收集生成*" >> "$output_file"
+  python3 "$PYTHON_SCRIPT" github "$output_file"
   
   echo -e "  ${YELLOW}已保存: $output_file${NC}"
 }
+
+# 运行收集
 
 # AI 资讯
 collect_rss "ai" "AI 资讯" "🤖" \
