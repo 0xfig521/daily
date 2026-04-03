@@ -46,11 +46,11 @@ EOF
     
     local xml=$(curl -sL --max-time 30 "$url" 2>/dev/null)
     
-    # 处理 CDATA 和多行 XML
-    local items=$(echo "$xml" | tr '\n' ' ' | sed 's/<\/item>/\n<\/item>/g' | grep -oP '<item>.*?</item>' | head -10)
+    # 处理多行 XML - 先将换行符替换为空格，然后用 <item> 作为分隔符
+    local items=$(echo "$xml" | tr '\n' ' ' | sed 's/<item>/\n<item>/g' | grep '<item>' | head -10)
     
     for item in $items; do
-      # 提取标题（支持 CDATA）
+      # 提取标题
       local title=$(echo "$item" | grep -oP '(?<=<title>)[^<]+' | sed 's/<!\[CDATA\[//g; s/\]\]>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/"/g')
       # 提取链接
       local link=$(echo "$item" | grep -oP '(?<=<link>)[^<]+' | head -1)
