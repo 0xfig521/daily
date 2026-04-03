@@ -1,6 +1,6 @@
 #!/bin/bash
-# Daily 资讯收集脚本 - 使用 curl 抓取 RSS 和 GitHub API
-# 直接生成 markdown 文件，不依赖 AI agent
+# Daily 资讯收集脚本
+# 使用 curl + jq 抓取 RSS 和 GitHub API
 
 set -e
 
@@ -106,27 +106,10 @@ tags: ['github', 'trending', '开源']
 EOF
 
 # 使用 GitHub API 获取近期热门项目
-# 按 stars 排序，获取近期更新的高星项目
-GITHUB_API="https://api.github.com/search/repositories?q=stars:>5000+pushed:>$(date -d '7 days ago' +%Y-%m-%d)&sort=stars&order=desc&per_page=20"
+curl -sL --max-time 30 "https://api.github.com/search/repositories?q=stars:>5000+pushed:>$(date -d '7 days ago' +%Y-%m-%d)&sort=stars&order=desc&per_page=15" | \
+  jq -r '.items[] | "### [\(.full_name)](\(.html_url))\n\n⭐ \(.stargazers_count | tostring) | \(.description // "")\n"' >> "$GITHUB_OUTPUT"
 
-curl -sL --max-time 30 "$GITHUB_API" | \
-  grep -oP '"full_name":"[^"]+"|"description":"[^"]*"|"stargazers_count":[0-9]+|"html_url":"[^"]*"' | \
-  while IFS= read -r line; do
-    echo "$line"
-  done | paste - - - - | while IFS=$'\t' read -r name desc stars url; do
-    name=$(echo "$name" | sed 's/"full_name":"//')
-    desc=$(echo "$desc" | sed 's/"description":"//' | sed 's/"//')
-    stars=$(echo "$stars" | sed 's/"stargazers_count"://')
-    url=$(echo "$url" | sed 's/"html_url":"//' | sed 's/"//')
-    
-    if [ -n "$name" ] && [ -n "$stars" ]; then
-      echo "### [$name]($url)" >> "$GITHUB_OUTPUT"
-      echo "" >> "$GITHUB_OUTPUT"
-      echo "⭐ $stars | $desc" >> "$GITHUB_OUTPUT"
-      echo "" >> "$GITHUB_OUTPUT"
-    fi
-  done
-
+echo "" >> "$GITHUB_OUTPUT"
 echo "*由 Daily RSS 收集器自动生成*" >> "$GITHUB_OUTPUT"
 echo -e "${YELLOW}[github-trending]${NC} 已保存: $GITHUB_OUTPUT"
 
