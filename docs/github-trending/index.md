@@ -1,6 +1,12 @@
 ---
-title: GitHub Trending
-description: GitHub 热门项目每日排行，跟踪最新最热的开源项目
+title: GitHub Trending - 热门开源项目每日排行
+description: GitHub 热门项目每日排行。跟踪最新最热的开源项目，发现开发者社区的趋势风向标。
+head:
+  - meta: { name: 'keywords', content: 'GitHub,Trending,开源项目,热门仓库,程序员,开发者工具,awesome,React,Vue,Python,JavaScript' }
+  - meta: { name: 'description', content: 'GitHub 热门项目每日排行。跟踪最新最热的开源项目，发现开发者社区的趋势风向标。' }
+  - meta: { property: 'og:title', content: 'GitHub Trending | 0xfig' }
+  - meta: { property: 'og:description', content: '跟踪最新最热的开源项目，发现开发者社区的趋势风向标' }
+  - link: { rel: 'canonical', href: 'https://daily.0xfig.xyz/github-trending/' }
 outline: 2
 ---
 

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daily.0xfig.xyz/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow non-essential paths
+Disallow: /api/
+Disallow: /_temp/

@@ -1,6 +1,12 @@
 ---
-title: Web3 资讯
-description: 区块链、DeFi、NFT、DAO 等前沿动态
+title: Web3 资讯 - 区块链与去中心化
+description: 区块链、DeFi、NFT、DAO 等前沿动态。追踪比特币、以太坊、Solana 等公链生态，了解 Web3 最新发展趋势。
+head:
+  - meta: { name: 'keywords', content: 'Web3,区块链,比特币,以太坊,DeFi,NFT,DAO,Solana,Polygon,Layer2,Crypto,加密货币,智能合约,去中心化' }
+  - meta: { name: 'description', content: '区块链、DeFi、NFT、DAO 等前沿动态。追踪比特币、以太坊、Solana 等公链生态。' }
+  - meta: { property: 'og:title', content: 'Web3 资讯 | 0xfig' }
+  - meta: { property: 'og:description', content: '追踪比特币、以太坊、Solana 等公链生态，了解 Web3 最新发展趋势' }
+  - link: { rel: 'canonical', href: 'https://daily.0xfig.xyz/web3/' }
 outline: 2
 ---
 

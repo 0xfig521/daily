@@ -1,6 +1,12 @@
 ---
-title: 超级个体
-description: 一人公司，独立开发，数字游民生活方式
+title: 超级个体 - 独立开发者与一人公司
+description: 一人公司、独立开发、数字游民生活方式。探索个体价值最大化的创业模式，学习独立开发者如何实现被动收入。
+head:
+  - meta: { name: 'keywords', content: '超级个体,一人公司,独立开发,SaaS,Indie Hacker,数字游民,远程工作,被动收入,创业,Product Hunt,Side Project' }
+  - meta: { name: 'description', content: '一人公司、独立开发、数字游民生活方式。探索个体价值最大化的创业模式。' }
+  - meta: { property: 'og:title', content: '超级个体 | 0xfig' }
+  - meta: { property: 'og:description', content: '探索个体价值最大化的创业模式，学习独立开发者如何实现被动收入' }
+  - link: { rel: 'canonical', href: 'https://daily.0xfig.xyz/opc/' }
 outline: 2
 ---
 
