@@ -21,9 +21,14 @@ hero:
 features:
   - icon: ☀️
     title: 每日简报
-    details: 每日早间汇总，5 大分类资讯一站式阅读，开启高效一天。
+    details: 每日早间汇总，6 大分类资讯一站式阅读，开启高效一天。
     link: /morning-brief/
     linkText: 查看今日
+  - icon: 💡
+    title: 独立开发灵感
+    details: 项目创意、赚钱思路、产品灵感，为独立开发者提供每日灵感来源。
+    link: /indie-ideas/
+    linkText: 查看灵感
   - icon: 🔗
     title: Web3 前沿
     details: 区块链、DeFi、NFT、DAO 等去中心化技术动态，把握 Web3 发展脉搏。
@@ -31,7 +36,7 @@ features:
     linkText: 探索更多
   - icon: 🤖
     title: AI 创新
-    details: 人工智能、机器学习、大模型最新突破，追踪技术变革与产业落地应用。
+    details: 人工智能、机器学习，大模型最新突破，追踪技术变革与产业落地应用。
     link: /ai/
     linkText: 探索更多
   - icon: 🚀

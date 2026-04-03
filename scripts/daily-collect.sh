@@ -97,6 +97,15 @@ collect_github() {
   echo -e "  ${YELLOW}已保存: $output_file${NC}" | tee -a "$LOG_FILE"
 }
 
+collect_indie_ideas() {
+  echo -e "\n${GREEN}[独立开发灵感]${NC} 开始收集..." | tee -a "$LOG_FILE"
+  
+  bash "$SCRIPT_DIR/collect-indie-ideas.sh" 2>&1 | tee -a "$LOG_FILE"
+  
+  COUNTS[indie]=1
+  echo -e "  ${YELLOW}已保存: $PROJECT_ROOT/docs/indie-ideas/${TODAY}-ideas.md${NC}" | tee -a "$LOG_FILE"
+}
+
 # 生成 Morning Brief
 generate_morning_brief() {
   echo -e "\n${GREEN}[Morning Brief]${NC} 生成简报..." | tee -a "$LOG_FILE"
@@ -209,6 +218,9 @@ collect_rss "opc" "超级个体" "🚀" \
 
 # GitHub Trending
 collect_github
+
+# 独立开发灵感
+collect_indie_ideas
 
 # Morning Brief
 generate_morning_brief
