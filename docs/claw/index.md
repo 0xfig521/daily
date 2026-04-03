@@ -1,64 +1,39 @@
 ---
 title: Claw 资讯
 description: OpenClaw 及 Claw 相关技术的最新动态与资讯
-layout: home
+outline: 2
 ---
+
+<script setup>
+import { Links, Underline } from '@theojs/lumen'
+</script>
 
 # Claw 资讯 🦀
 
-> OpenClaw 及 Claw 相关技术的前沿动态与深度解析
+<Underline color="brand" />
 
-## 📚 关于 Claw
+OpenClaw 及 Claw 相关技术的前沿动态与深度解析。
 
-Claw 是一类创新的技术工具和框架，专注于 [请补充 Claw 的核心定位和功能描述]。
-
-### 🔍 主要内容
-
-- **OpenClaw**: 开源 Claw 实现与生态发展
-- **技术动态**: Claw 相关的技术更新与版本迭代
-- **应用场景**: Claw 在实际项目中的落地实践
-- **生态建设**: Claw 社区工具、插件和扩展
-
----
-
-## 📰 最新动态
+## 📰 最新资讯
 
 - [2026-04-03 资讯](./2026-04-03-daily.md)
 
-<!-- 
-添加新文章示例：
+## 📊 今日热词
 
-1. 创建文件：docs/claw/2026-03-10-article-title.md
-2. 添加 Frontmatter:
----
-title: 文章标题
-description: 简短描述
-date: 2026-03-10
-tags: ['claw', 'openclaw']
----
+<Links
+  :grid="4"
+  :items="[
+    { icon: { icon: '🦞', color: '#FF6B35' }, name: 'OpenClaw', desc: 'AI Assistant', link: 'https://github.com/openclaw/openclaw' },
+    { icon: { icon: '🔌', color: '#4285F4' }, name: 'ClawHub', desc: 'Skills 市场', link: 'https://clawhub.ai/' },
+    { icon: { icon: '🤖', color: '#10A37F' }, name: 'AI Agent', desc: '自主智能体', link: './2026-04-03-daily.md' },
+    { icon: { icon: '🔧', color: '#6B7280' }, name: '工具生态', desc: '插件与 Skill', link: './2026-04-03-daily.md' }
+  ]"
+/>
 
-3. 编写内容
--->
+## 🔗 快速访问
 
----
-
-## 🔗 相关链接
-
-- [OpenClaw GitHub](https://github.com/topics/claw) (待补充)
-- [Claw 官方文档](https://example.com) (待补充)
-- [Claw 社区](https://example.com) (待补充)
+- [OpenClaw GitHub](https://github.com/openclaw/openclaw) | [ClawHub](https://clawhub.ai/) | [OpenClaw 文档](https://docs.openclaw.ai/)
 
 ---
 
-## 💡 贡献指南
-
-欢迎提交 Claw 相关的资讯、教程和技术分享！
-
-1. 在 `docs/claw/` 目录下创建新的 Markdown 文件
-2. 使用标准的 Frontmatter 格式
-3. 提交 Pull Request
-
----
-
-**最后更新**: 2026-04-03
-**维护者**: IceHugh
+> 💡 每日资讯自动收集更新，由 OpenClaw + daily-news skill 驱动
