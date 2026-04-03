@@ -65,7 +65,8 @@ EOF
       local start_line=16
       tail -n +$start_line "$tmpfile" >> "$output_file" 2>/dev/null || cat "$tmpfile" >> "$output_file"
       
-      local count=$(grep -c "^### " "$tmpfile" 2>/dev/null || echo 0)
+      local count
+      count=$(grep -c "^### " "$tmpfile" 2>/dev/null) || count=0
       total_count=$((total_count + count))
       rm -f "$tmpfile"
     fi
@@ -180,10 +181,10 @@ update_index() {
 # AI 资讯 - 扩展源
 collect_rss "ai" "AI 资讯" "🤖" \
   "https://techcrunch.com/feed/" \
-  "https://www.jiqizhixin.com/rss" \
   "https://www.qbitai.com/feed" \
   "https://venturebeat.com/category/ai/feed/" \
-  "https://www.artificialintelligence-news.com/feed/"
+  "https://www.artificialintelligence-news.com/feed/" \
+  "https://www.technologyreview.com/feed/"
 
 # Web3 资讯
 collect_rss "web3" "Web3 资讯" "⛓️" \
@@ -201,9 +202,9 @@ collect_rss "claw" "Claw 资讯" "🦀" \
 # OPC 超级个体
 collect_rss "opc" "超级个体" "🚀" \
   "https://hnrss.org/frontpage" \
-  "https://sspai.com/feed" \
   "https://www.producthunt.com/feed" \
-  "https://www.indiehackers.com/feed"
+  "https://www.indiehackers.com/feed" \
+  "https://sspai.com/feed"
 
 # GitHub Trending
 collect_github
