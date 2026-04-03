@@ -54,7 +54,7 @@ EOF
     if [ -f "$tmpfile" ]; then
       # 跳过 frontmatter 和标题部分，追加内容
       sed -n '16,$p' "$tmpfile" >> "$output_file" 2>/dev/null
-      local count=$(grep -c "^### " "$tmpfile" 2>/dev/null || echo 0)
+      local count=$(grep -c "^### " "$tmpfile" 2>/dev/null || true)
       total_count=$((total_count + count))
       rm -f "$tmpfile"
     fi
@@ -83,9 +83,9 @@ collect_github() {
 # AI 资讯
 collect_rss "ai" "AI 资讯" "🤖" \
   "https://techcrunch.com/feed/" \
-  "https://36kr.com/feed" \
   "https://www.jiqizhixin.com/rss" \
-  "https://www.qbitai.com/feed"
+  "https://www.qbitai.com/feed" \
+  "https://venturebeat.com/category/ai/feed/"
 
 # Web3 资讯
 collect_rss "web3" "Web3 资讯" "⛓️" \
@@ -100,10 +100,9 @@ collect_rss "claw" "Claw 资讯" "🦀" \
 
 # OPC 超级个体
 collect_rss "opc" "超级个体" "🚀" \
-  "https://www.indiehackers.com/feed" \
   "https://hnrss.org/frontpage" \
-  "https://36kr.com/feed" \
-  "https://sspai.com/feed"
+  "https://sspai.com/feed" \
+  "https://www.producthunt.com/feed"
 
 # GitHub Trending
 collect_github
