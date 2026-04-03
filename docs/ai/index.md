@@ -1,12 +1,6 @@
 ---
 title: AI 资讯 - 前沿AI与大模型动态
-description: 人工智能、机器学习、大模型最新进展。追踪 GPT、Claude、Gemini 等大模型动态，了解 AI Agent、AIGC、计算机视觉等技术前沿。
-head:
-  - meta: { name: 'keywords', content: 'AI,人工智能,大模型,ChatGPT,Claude,GPT,机器学习,深度学习,AI Agent,AIGC,OpenAI,Anthropic,Google AI,Hugging Face' }
-  - meta: { name: 'description', content: '人工智能、机器学习、大模型最新进展。追踪 GPT、Claude、Gemini 等大模型动态，了解 AI Agent、AIGC、计算机视觉等技术前沿。' }
-  - meta: { property: 'og:title', content: 'AI 资讯 | 0xfig' }
-  - meta: { property: 'og:description', content: '追踪 GPT、Claude、Gemini 等大模型动态，了解 AI Agent、AIGC 等技术前沿' }
-  - link: { rel: 'canonical', href: 'https://daily.0xfig.xyz/ai/' }
+description: 人工智能、机器学习，大模型最新进展。追踪 GPT、Claude、Gemini 等大模型动态，了解 AI Agent、AIGC、计算机视觉等技术前沿。
 outline: 2
 ---
 

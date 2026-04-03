@@ -1,12 +1,6 @@
 ---
 title: Claw 资讯 - OpenClaw 生态与工具
 description: OpenClaw 及 Claw 相关技术的最新动态与资讯。了解 AI Agent、Skills 生态、工具链更新。
-head:
-  - meta: { name: 'keywords', content: 'OpenClaw,Claw,AI Agent,Skills,ClawHub,智能体,AI工具,自动化,工作流' }
-  - meta: { name: 'description', content: 'OpenClaw 及 Claw 相关技术的最新动态与资讯。了解 AI Agent、Skills 生态、工具链更新。' }
-  - meta: { property: 'og:title', content: 'Claw 资讯 | 0xfig' }
-  - meta: { property: 'og:description', content: '了解 OpenClaw AI Agent 生态、Skills 生态、工具链最新更新' }
-  - link: { rel: 'canonical', href: 'https://daily.0xfig.xyz/claw/' }
 outline: 2
 ---
 
