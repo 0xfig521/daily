@@ -37,3 +37,4 @@ OpenClaw 及 Claw 相关技术的前沿动态与深度解析。
 ---
 
 > 💡 每日资讯自动收集更新，由 OpenClaw + daily-news skill 驱动
+- [2026-04-04 资讯](./2026-04-04-daily.md)
