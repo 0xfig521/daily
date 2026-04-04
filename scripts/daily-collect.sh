@@ -168,20 +168,15 @@ update_index() {
   local INDEX="$PROJECT_ROOT/docs/$category/index.md"
   
   if [ -f "$INDEX" ]; then
-    # 移除旧的今日链接
+    # 检查是否已有今日链接
     if grep -q "${TODAY}-daily.md" "$INDEX"; then
       echo "  $category: 今日已有，跳过"
       return
     fi
     
-    # 在 "> 💡 提示" 之前添加
-    if grep -q "💡 提示" "$INDEX"; then
-      sed -i "/> 💡 提示/i\\
-- [$TODAY 资讯](./${TODAY}-daily.md)\\
-" "$INDEX"
-    else
-      echo "- [$TODAY 资讯](./${TODAY}-daily.md)" >> "$INDEX"
-    fi
+    # 替换 "## 📰 最新资讯" 区域下的旧链接
+    # 匹配: - [YYYY-MM-DD 资讯](./YYYY-MM-DD-daily.md)  注意: 链接格式是 [](URL) 不是 .(URL)
+    sed -i 's/- \[[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} 资讯\](\.\/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}-daily\.md)/- ['"'"'${TODAY}'"'"' 资讯](.\/'"'"'${TODAY}'"'"'-daily.md)/' "$INDEX"
     echo "  更新 $category index.md"
   fi
 }

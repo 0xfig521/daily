@@ -16,7 +16,7 @@ import { Links, Underline } from '@theojs/lumen'
 
 ## 📰 最新资讯
 
-- [2026-04-03 资讯](./2026-04-03-daily.md)
+- [2026-04-04 资讯](./2026-04-04-daily.md))
 
 ## 📊 热门话题
 
@@ -36,5 +36,7 @@ import { Links, Underline } from '@theojs/lumen'
 
 ---
 
+- [2026-04-04 资讯](./2026-04-04-daily.md))
+
 > 💡 每日资讯自动收集更新，由 OpenClaw + daily-news skill 驱动
-- [2026-04-04 资讯](./2026-04-04-daily.md)
+
