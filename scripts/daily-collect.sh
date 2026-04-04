@@ -179,6 +179,53 @@ update_index() {
     echo "  更新 $category index.md"
   fi
 }
+# 生成 daily-posts.data.js (供 DailyArchive 组件使用)
+generate_posts_data() {
+  local data_file="$PROJECT_ROOT/docs/.vitepress/theme/components/daily-posts.data.js"
+  
+  echo "// 自动生成的数据文件" > "$data_file"
+  echo "// 由 daily-collect.sh 脚本在收集时更新" >> "$data_file"
+  echo "export default {" >> "$data_file"
+  echo "  posts: [" >> "$data_file"
+  
+  # 遍历所有分类目录，收集所有每日文章
+  local first=true
+  for category in ai web3 claw opc github-trending indie-ideas; do
+    local dir="$PROJECT_ROOT/docs/$category"
+    if [ -d "$dir" ]; then
+      for md_file in "$dir"/*-daily.md; do
+        if [ -f "$md_file" ] && [[ "$(basename "$md_file")" == *"$TODAY"* ]]; then
+          # 提取标题
+          local title=$(grep -m1 '^title:' "$md_file" 2>/dev/null | sed 's/title:\s*//' | sed 's/^\s*//;s/\s*$//')
+          # 提取日期（从文件名）
+          local date_str=$(basename "$md_file" | sed 's/-daily\.md//')
+          # 转换为 timestamp
+          local timestamp=$(date -d "$date_str" +%s000 2>/dev/null || echo "0")
+          
+          if [ -n "$title" ]; then
+            # 移除标题中的 emoji
+            title=$(echo "$title" | sed 's/[\u{1F300}-\u{1F9FF}]//g' | sed 's/^\s*//;s/\s*$//')
+            
+            if [ "$first" = true ]; then
+              first=false
+            else
+              echo "," >> "$data_file"
+            fi
+            
+            echo "    { url: '/$category/$date_str-daily.html', dateStr: '$date_str', title: '$title', timestamp: $timestamp }" >> "$data_file"
+          fi
+        fi
+      done
+    fi
+  done
+  
+  echo "" >> "$data_file"
+  echo "  ]" >> "$data_file"
+  echo "}" >> "$data_file"
+  
+  echo "  生成 posts data: $data_file"
+}
+
 
 # ========== 主流程 ==========
 
@@ -224,6 +271,9 @@ echo -e "\n${GREEN}[Index]${NC} 更新索引..." | tee -a "$LOG_FILE"
 for category in ai web3 claw opc github-trending; do
   update_index "$category"
 done
+
+# 生成 posts data
+generate_posts_data
 
 # Git 提交
 echo -e "\n${GREEN}[Git]${NC} 提交..." | tee -a "$LOG_FILE"

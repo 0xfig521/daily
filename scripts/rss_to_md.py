@@ -13,6 +13,23 @@ import hashlib
 from datetime import datetime, timedelta
 from difflib import SequenceMatcher
 
+# 翻译器
+try:
+    from deep_translator import GoogleTranslator
+    _trans = GoogleTranslator(source='en', target='zh-CN')
+    def translate(text):
+        """翻译文本为中文，失败时返回原文"""
+        if not text or not text.strip():
+            return text
+        try:
+            result = _trans.translate(text)
+            return result if result else text
+        except Exception:
+            return text
+except ImportError:
+    def translate(text):
+        return text
+
 def similarity(a, b):
     """计算两个字符串的相似度"""
     return SequenceMatcher(None, a.lower(), b.lower()).ratio()
@@ -55,10 +72,16 @@ def fetch_rss(url, limit=15):
                 # 计算内容hash用于去重
                 content_hash = hashlib.md5((title_text + link_text).encode()).hexdigest()[:8]
                 
+                # 翻译标题和摘要为中文
+                title_zh = translate(title_text)
+                desc_zh = translate(desc_text)
+
                 items.append({
-                    'title': title_text[:200],
+                    'title': title_zh[:200],
+                    'title_en': title_text[:100],
                     'link': link_text,
-                    'desc': desc_text[:200],
+                    'desc': desc_zh[:300],
+                    'desc_en': desc_text[:200],
                     'hash': content_hash
                 })
         
@@ -86,9 +109,9 @@ def deduplicate(items, threshold=0.85):
     return unique
 
 def generate_markdown(category_name, emoji, items, output_file):
-    """生成 Markdown 文件"""
+    """生成 Markdown 文件（中文标题和摘要）"""
     today = datetime.now().strftime("%Y-%m-%d")
-    
+
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(f'''---
 title: {category_name} {today}
@@ -99,19 +122,19 @@ tags: ['{category_name}', '每日资讯']
 
 # {category_name} {emoji}
 
-> {today} | 自动收集 | 共 {len(items)} 条
+> {today} | 自动收集 | 翻译整理 | 共 {len(items)} 条
 
 ''')
-        
+
         for i, item in enumerate(items, 1):
             f.write(f"### {i}. {item['title']}\n\n")
             if item['desc']:
                 f.write(f"{item['desc']}\n\n")
             if item['link']:
                 f.write(f"- 来源: [{item['link']}]({item['link']})\n\n")
-        
+
         f.write("\n---\n*由 Daily 自动收集生成*\n")
-    
+
     return len(items)
 
 def generate_morning_brief(items_by_category, output_file):
@@ -145,7 +168,7 @@ tags: ['morning-brief', '每日简报']
         
         f.write("\n## 🔥 今日热点\n\n")
         
-        # 取每个分类的第一条作为热点
+        # 取每个分类的第一条作为热点（已翻译为中文）
         for cat, items in items_by_category.items():
             if items:
                 emoji_map = {'ai': '🤖', 'web3': '⛓️', 'claw': '🦀', 'opc': '🚀', 'github': '🔥'}
@@ -153,7 +176,7 @@ tags: ['morning-brief', '每日简报']
                 top = items[0]
                 f.write(f"### {emoji} [{cat.upper()}热点] {top['title']}\n")
                 if top['desc']:
-                    f.write(f"{top['desc'][:100]}...\n")
+                    f.write(f"{top['desc'][:150]}...\n")
                 f.write(f"- [阅读原文]({top['link']})\n\n")
         
         f.write("\n## 📋 快速导航\n\n")
@@ -209,13 +232,14 @@ tags: ['github', 'trending', '开源']
             full_name = item.get('full_name', '')
             html_url = item.get('html_url', '')
             stars = item.get('stargazers_count', 0)
-            desc = item.get('description') or '暂无描述'
-            
+            desc_en = item.get('description') or '暂无描述'
+            desc_zh = translate(desc_en)
+
             f.write(f"### [{full_name}]({html_url})\n\n")
             f.write(f"⭐ **{stars:,}** stars\n\n")
-            f.write(f"{desc}\n\n")
+            f.write(f"{desc_zh}\n\n")
             f.write(f"- [GitHub]({html_url})\n\n")
-        
+
         f.write("\n---\n*由 Daily 自动收集生成*\n")
 
 if __name__ == '__main__':
