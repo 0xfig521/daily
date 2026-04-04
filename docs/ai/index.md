@@ -15,8 +15,11 @@ import { Links, Underline } from '@theojs/lumen'
 人工智能、机器学习、工具应用最新进展，追踪技术突破与产业落地。
 
 ## 📰 最新资讯
-- [2026-04-04 资讯](./2026-04-04-daily.md)
-- [2026-04-03 资讯](./2026-04-03-daily.md)
+
+<ClientOnly>
+  <DailyArchive />
+</ClientOnly>
+
 ## 📊 今日热词
 
 <Links
@@ -25,7 +28,7 @@ import { Links, Underline } from '@theojs/lumen'
     { icon: { icon: 'logos:openai', color: '#412991' }, name: 'GPT-5', desc: 'OpenAI 最新模型', link: 'https://openai.com/gpt-5' },
     { icon: { icon: 'logos:anthropic', color: '#1E1E1E' }, name: 'Claude 4', desc: 'Anthropic 最新模型', link: 'https://anthropic.com/claude' },
     { icon: { icon: 'logos:huggingface', color: '#FFD21E' }, name: '开源模型', desc: 'Hugging Face', link: 'https://huggingface.co/models' },
-    { icon: { icon: '🤖', color: '#4285F4' }, name: 'AI Agent', desc: '自主智能体', link: './2026-04-03-daily.md' }
+    { icon: { icon: '🤖', color: '#4285F4' }, name: 'AI Agent', desc: '自主智能体', link: './2026-04-04-daily.html' }
   ]"
 />
 
@@ -35,6 +38,4 @@ import { Links, Underline } from '@theojs/lumen'
 
 ---
 
-
 > 💡 每日资讯自动收集更新，由 OpenClaw + daily-news skill 驱动
-
