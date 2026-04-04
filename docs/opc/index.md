@@ -15,9 +15,8 @@ import { Links, Underline } from '@theojs/lumen'
 一人公司、独立开发、数字游民生活方式，探索个体价值最大化的无限可能。
 
 ## 📰 最新资讯
-
-- [2026-04-04 资讯](./2026-04-04-daily.md))
-
+- [2026-04-04 资讯](./2026-04-04-daily.md)
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 ## 📊 热门话题
 
 <Links
@@ -36,7 +35,6 @@ import { Links, Underline } from '@theojs/lumen'
 
 ---
 
-- [2026-04-04 资讯](./2026-04-04-daily.md))
 
 > 💡 每日资讯自动收集更新，由 OpenClaw + daily-news skill 驱动
 

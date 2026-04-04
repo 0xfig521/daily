@@ -15,9 +15,8 @@ import { Links, Underline } from '@theojs/lumen'
 人工智能、机器学习、工具应用最新进展，追踪技术突破与产业落地。
 
 ## 📰 最新资讯
-
-- [2026-04-04 资讯](./2026-04-04-daily.md))
-
+- [2026-04-04 资讯](./2026-04-04-daily.md)
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 ## 📊 今日热词
 
 <Links
@@ -36,7 +35,6 @@ import { Links, Underline } from '@theojs/lumen'
 
 ---
 
-- [2026-04-04 资讯](./2026-04-04-daily.md))
 
 > 💡 每日资讯自动收集更新，由 OpenClaw + daily-news skill 驱动
 
