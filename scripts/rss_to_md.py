@@ -19,10 +19,10 @@ try:
     _trans = GoogleTranslator(source='en', target='zh-CN')
     def translate(text):
         """翻译文本为中文，失败时返回原文"""
-        if not text or not text.strip():
-            return text
+        if not text or not str(text).strip():
+            return text or ""
         try:
-            result = _trans.translate(text)
+            result = _trans.translate(str(text))
             return result if result else text
         except Exception:
             return text

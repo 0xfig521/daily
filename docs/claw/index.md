@@ -1,6 +1,6 @@
 ---
 title: Claw 资讯
-description: Claw 最新资讯
+description: OpenClaw 和 ClawHub 生态最新动态
 outline: 2
 ---
 
@@ -8,15 +8,16 @@ outline: 2
 import { Underline } from '@theojs/lumen'
 </script>
 
-# Claw 资讯
+# Claw 资讯 🦀
 
 <Underline color="brand" />
 
+OpenClaw 和 ClawHub 生态最新动态
+
 ## 📰 最新资讯
 
-<ClientOnly>
-  <DailyArchive />
-</ClientOnly>
+- [2026-04-04 资讯](./2026-04-04-daily.md)
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 
 ---
 

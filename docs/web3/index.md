@@ -1,6 +1,6 @@
 ---
 title: Web3 资讯
-description: Web3 最新资讯
+description: Web3 加密货币行业每日资讯
 outline: 2
 ---
 
@@ -8,15 +8,16 @@ outline: 2
 import { Underline } from '@theojs/lumen'
 </script>
 
-# Web3 资讯
+# Web3 资讯 ⛓️
 
 <Underline color="brand" />
 
+Web3 加密货币行业每日资讯
+
 ## 📰 最新资讯
 
-<ClientOnly>
-  <DailyArchive />
-</ClientOnly>
+- [2026-04-04 资讯](./2026-04-04-daily.md)
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 
 ---
 

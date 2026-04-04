@@ -17,10 +17,11 @@
 </template>
 
 <script setup lang="ts">
-// 直接从预生成的数据文件导入
+// 直接从同目录的 data 文件导入
+import { computed } from 'vue'
 import postsData from './daily-posts.data.js'
 
-const posts = postsData.posts
+const posts = computed(() => postsData.posts || [])
 </script>
 
 <style scoped>

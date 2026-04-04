@@ -1,6 +1,6 @@
 ---
-title: Github-trending 资讯
-description: Github-trending 最新资讯
+title: GitHub Trending
+description: 热门开源项目每日排行
 outline: 2
 ---
 
@@ -8,15 +8,16 @@ outline: 2
 import { Underline } from '@theojs/lumen'
 </script>
 
-# Github-trending 资讯
+# GitHub Trending 📈
 
 <Underline color="brand" />
 
+热门开源项目每日排行
+
 ## 📰 最新资讯
 
-<ClientOnly>
-  <DailyArchive />
-</ClientOnly>
+- [2026-04-04 资讯](./2026-04-04-daily.md)
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 
 ---
 

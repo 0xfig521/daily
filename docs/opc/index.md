@@ -1,6 +1,6 @@
 ---
-title: Opc 资讯
-description: Opc 最新资讯
+title: OPC 超级个体
+description: 独立创业者 · Solo Founder · SaaS 动态
 outline: 2
 ---
 
@@ -8,15 +8,16 @@ outline: 2
 import { Underline } from '@theojs/lumen'
 </script>
 
-# Opc 资讯
+# OPC 超级个体 🚀
 
 <Underline color="brand" />
 
+独立创业者 · Solo Founder · SaaS 动态
+
 ## 📰 最新资讯
 
-<ClientOnly>
-  <DailyArchive />
-</ClientOnly>
+- [2026-04-04 资讯](./2026-04-04-daily.md)
+- [2026-04-03 资讯](./2026-04-03-daily.md)
 
 ---
 
