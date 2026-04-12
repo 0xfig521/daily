@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Generator</title>
+  <script>p5.disableFriendlyErrors = true;</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #0a0a0f; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script>
+const CONFIG = { seed: 42, particles: 180 };
+const PALETTE = {
+  neon1: '#00f0ff',
+  neon2: '#bf00ff',
+  neon3: '#00ff88',
+  accent: '#ff0080'
+};
+
+let particles = [];
+let t = 0;
+
+function setup() {
+  createCanvas(1200, 630);
+  randomSeed(CONFIG.seed);
+  noiseSeed(CONFIG.seed);
+  colorMode(RGB, 255, 255, 255, 255);
+  noStroke();
+  
+  for (let i = 0; i < CONFIG.particles; i++) {
+    particles.push({
+      x: random(width),
+      y: random(height),
+      vx: random(-0.3, 0.3),
+      vy: random(-0.3, 0.3),
+      size: random(1.5, 4),
+      hue: random([PALETTE.neon1, PALETTE.neon2, PALETTE.neon3, PALETTE.accent]),
+      phase: random(TWO_PI),
+    });
+  }
+}
+
+function draw() {
+  // Dark background
+  background(10, 10, 15);
+  
+  t += 0.008;
+  
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    let p = particles[i];
+    for (let j = i + 1; j < particles.length; j++) {
+      let q = particles[j];
+      let dx = p.x - q.x;
+      let dy = p.y - q.y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        let alpha = map(dist, 0, 120, 80, 0);
+        let n = noise((p.x + q.x) * 0.005, (p.y + q.y) * 0.005, t);
+        let c = n > 0.5 ? color(0, 240, 255, alpha) : n > 0.3 ? color(191, 0, 255, alpha) : color(0, 255, 136, alpha);
+        stroke(c);
+        strokeWeight(0.5);
+        line(p.x, p.y, q.x, q.y);
+      }
+    }
+  }
+  
+  // Draw particles
+  noStroke();
+  for (let p of particles) {
+    let n = noise(p.x * 0.003, p.y * 0.003, t + p.phase);
+    let pulse = Math.sin(t * 2 + p.phase) * 0.3 + 0.7;
+    let sz = p.size * pulse;
+    
+    // Glow layers
+    fill(red(p.hue), green(p.hue), blue(p.hue), 30);
+    ellipse(p.x, p.y, sz * 6);
+    fill(red(p.hue), green(p.hue), blue(p.hue), 60);
+    ellipse(p.x, p.y, sz * 3);
+    fill(red(p.hue), green(p.hue), blue(p.hue), 200);
+    ellipse(p.x, p.y, sz);
+    fill(255);
+    ellipse(p.x, p.y, sz * 0.5);
+    
+    // Move
+    p.x += p.vx + Math.sin(t + p.phase) * 0.2;
+    p.y += p.vy + Math.cos(t + p.phase) * 0.15;
+    
+    if (p.x < -10) p.x = width + 10;
+    if (p.x > width + 10) p.x = -10;
+    if (p.y < -10) p.y = height + 10;
+    if (p.y > height + 10) p.y = -10;
+  }
+  
+  // Center text
+  textAlign(CENTER, CENTER);
+  textFont('Georgia');
+  
+  // Glow text
+  drawingContext.filter = 'blur(6px)';
+  fill(0, 240, 255, 150);
+  textSize(80);
+  text('DAILY', width / 2, height / 2 - 15);
+  drawingContext.filter = 'none';
+  
+  fill(255, 255, 255, 240);
+  textSize(80);
+  text('DAILY', width / 2, height / 2 - 15);
+  
+  fill(0, 240, 255, 200);
+  textSize(14);
+  textFont('Arial');
+  text('AI  ·  Web3  ·  Claw  ·  OPC  ·  GitHub Trending', width / 2, height / 2 + 50);
+  
+  if (frameCount === 3) {
+    setTimeout(() => {
+      saveCanvas('hero_output', 'png');
+      window._done = true;
+    }, 200);
+  }
+}
+</script>
+</body>
+</html>
