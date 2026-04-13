@@ -15,11 +15,11 @@ tags: ['morning-brief', '每日简报']
 
 ## 📰 今日资讯
 
-- [AI 资讯](./ai/2026-04-12-daily.md)
-- [Web3 资讯](./web3/2026-04-12-daily.md)
-- [Claw 资讯](./claw/2026-04-12-daily.md)
-- [OPC 资讯](./opc/2026-04-12-daily.md)
-- [GitHub Trending](./github-trending/2026-04-12-daily.md)
+- [AI 资讯](../ai/2026-04-12-daily.md)
+- [Web3 资讯](../web3/2026-04-12-daily.md)
+- [Claw 资讯](../claw/2026-04-12-daily.md)
+- [OPC 资讯](../opc/2026-04-12-daily.md)
+- [GitHub Trending](../github-trending/2026-04-12-daily.md)
 
 ---
 
