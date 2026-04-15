@@ -16,6 +16,7 @@ import { Links, Underline } from '@theojs/lumen'
 
 ## 📰 最新灵感
 
+- [2026-04-14 从每日新闻提炼的7个创业灵感](./2026-04-14-7-startup-ideas-from-daily-news.md) 🆕
 - [2026-04-03 Awesome OpenClaw 上网指南](./2026-04-03-awesome-openclaw-guide.md) 🆕 100+链接
 - [2026-04-03 一觉醒来 OpenClaw 给我赚了100万](./2026-04-03-one-hundred-million.md) 科幻文
 - [2026-04-03 OpenClaw 自主赚钱指南](./2026-04-03-openclaw-monetization.md)
