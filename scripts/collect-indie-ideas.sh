@@ -3,7 +3,7 @@
 
 set -e
 
-PROJECT_ROOT="/root/.openclaw/workspace/daily"
+PROJECT_ROOT="/root/workspace/daily"
 TODAY=$(date +%Y-%m-%d)
 
 echo "💡 独立开发者灵感收集: $TODAY"

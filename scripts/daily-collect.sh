@@ -4,7 +4,7 @@
 
 set -e
 
-PROJECT_ROOT="/root/.openclaw/workspace/daily"
+PROJECT_ROOT="/root/workspace/daily"
 TODAY=$(date +%Y-%m-%d)
 LOG_FILE="/tmp/daily-collect-$(date +%Y%m%d).log"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
