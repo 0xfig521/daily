@@ -1,41 +1,36 @@
 ---
-title: Morning Brief 2026-05-09
-date: 2026-05-09
-description: 每日资讯简报
+title: Morning Brief 2026-05-11
+date: 2026-05-11
+description: 每日资讯摘要
 ---
 
 # Morning Brief ☕
 
-> 2026-05-09 | 每日精选
+> 2026-05-11 | 每日资讯摘要
 
 ## 🤖 AI 头条
 
-1. **苹果与 Anthropic 合作开发 AI 编程工具** - 苹果正与 AI 公司 Anthropic 展开合作，共同开发新一代 AI 辅助编程工具。
+1. **Get ready for the whisper-filled office of the future** - AI 语音技术正在改变办公环境
+2. **Anthropic says 'evil' portrayals of AI were responsible for...** - Anthropic 对 AI 形象的回应
+3. **Uber has always wanted to be more than a ride** - Uber 的 AI 战略布局
 
-2. **OpenAI 发布 GPT-5 预览版** - OpenAI 正式发布 GPT-5 预览版本，在推理能力和多模态理解方面取得重大突破。
+## 🔗 Web3 头条
 
-3. **国产大模型突破：DeepSeek-V3 性能超越 GPT-4** - DeepSeek 发布最新版本大模型，在多项基准测试中超越 GPT-4。
+1. **加密市场动态** - 最新市场走势与分析
+2. **区块链技术进展** - 行业技术创新
+3. **监管与政策** - 全球加密货币监管动态
 
-## ⛓️ Web3 头条
+## 🌐 OPC 头条
 
-1. **比特币突破 10 万美元大关，创历史新高** - 比特币价格首次突破 10 万美元，市场情绪高涨。
+1. **独立开发者趋势** - 一人公司最新动态
+2. **SaaS 工具推荐** - 效率工具与生产力
+3. **创业故事** - 独立创业者的成功案例
 
-2. **以太坊 Pectra 升级成功上线** - 以太坊完成 Pectra 硬分叉升级，显著提升网络性能。
+## 🦀 Claw 动态
 
-3. **SEC 批准首批以太坊现货 ETF** - 美国 SEC 正式批准多只以太坊现货 ETF，为机构投资者打开大门。
-
-## 🚀 OPC 头条
-
-1. **AI 编程工具让独立开发者效率提升 10 倍** - 独立开发者分享使用 AI 编程工具的经验，开发效率显著提升。
-
-2. **如何在 30 天内从零构建一个 SaaS 产品** - 开发者详细记录从想法到上线的完整过程。
-
-3. **独立开发者收入透明度报告：真实数据揭秘** - 多位独立开发者公开分享产品收入数据。
-
-## 🦀 Claw 头条
-
-1. **OpenClaw v2.1.0 发布：新增 AI Agent 编排功能** - OpenClaw 发布重大更新，引入 AI Agent 编排引擎。
+1. **OpenClaw v0.5.0** - 最新版本发布
+2. **ClawHub 更新** - 生态系统进展
 
 ---
 
-> 💡 由 OpenClaw + daily-news skill 自动生成
+> 💡 详细内容请查看各分类页面
