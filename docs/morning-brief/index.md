@@ -1,46 +1,46 @@
 ---
-title: Morning Brief 2026-05-20
-date: 2026-05-20
-description: 每日晨间简报
-tags: ['晨间简报', '每日资讯']
+title: Morning Brief 2026-05-21
+date: 2026-05-21
+description: 每日早报 - 各分类精选头条
+tags: ['早报', '每日资讯']
 ---
 
-# ☕ Morning Brief | 2026-05-20
+# ☀️ Morning Brief
 
-> 每日精选 | 每分类 Top 3
-
----
-
-## 🤖 AI
-
-1. **[Google 在 IO 2026 宣布成为 AI 设计领域竞争者](https://techcrunch.com/)** - Google 在 IO 2026 大会上宣布 AI 设计能力新进展
-2. **[凭借 Gemini 3.5 Flash，Google 押注下一代 AI 浪潮是代理而非聊天机器人](https://techcrunch.com/)** - Google 发布 Gemini 3.5 Flash，强调 AI 代理方向
-3. **[Google AI Studio 现在让任何人几分钟内构建 Android 应用](https://techcrunch.com/)** - Google AI Studio 降低移动开发门槛
-
-## 🌐 Web3
-
-1. **[特朗普下令审查加密公司使用支付渠道权限](https://www.coindesk.com/policy/2026/05/19/trump-orders-government-fed-to-review-crypto-firms-access-to-payment-rails)** - 行政命令要求美联储审查加密行业支付权限
-2. **[Gary Gensler 加密合规标杆项目完成首笔交易](https://decrypt.co/)** - 近十年后首次完成加密合规交易
-3. **[Tether/Circle 流动性危机警告](https://www.coindesk.com/)** - 对稳定币发行商流动性的关注
-
-## 📰 OPC (Hacker News)
-
-1. **[Karpathy 宣布加入 Anthropic](https://twitter.com/karpathy/status/2056753169888334312)** - 1114 points, 462 comments
-2. **[苹果发布全新无障碍功能](https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/)** - 572 points, 289 comments
-3. **[虚拟操作系统博物馆](https://virtualosmuseum.org/)** - 收录几乎所有操作系统的虚拟博物馆，536 points
-
-## 🐉 Claw (OpenClaw)
-
-1. **[OpenClaw 2026.5.19-beta.2](https://github.com/openclaw/openclaw/releases)** - 最新 beta 版本，修复关键 bug
-2. **[OpenClaw 2026.5.19-beta.1](https://github.com/openclaw/openclaw/releases)** - 新功能和改进
-3. **[OpenClaw 2026.5.18 正式版](https://github.com/openclaw/openclaw/releases)** - 稳定版本更新
-
-## 📈 GitHub Trending
-
-1. **[SmallCode](https://github.com/Doorman11991/smallcode)** ⭐ 716 - 为小型 LLM 优化的 AI 编码代理，基准测试达 87%
-2. **[HRM-Text](https://github.com/sapientinc/HRM-Text)** ⭐ 390 - 基于 HRM 架构的 1B 文本生成模型
-3. **[Audit](https://github.com/evilsocket/audit)** ⭐ 289 - 8 阶段漏洞发现代理
+> 2026-05-21 | 自动精选
 
 ---
 
-> 完整内容: [AI](/ai/) | [Web3](/web3/) | [OPC](/opc/) | [Claw](/claw/) | [GitHub Trending](/github-trending/)
+## 🤖 AI 精选
+
+1. **OpenAI 正推进 IPO，或将于 9 月进行** — 在马斯克诉讼败诉后，OpenAI 恢复 IPO 准备工作。
+2. **Anthropic 将每月向 xAI 支付 12.5 亿美元购买算力** — xAI 与 Anthropic 达成巨额算力交易。
+3. **OpenAI 声称解决了 80 年数学难题** — 推理模型推翻了自 1946 年未解的几何猜想。
+
+---
+
+## ⛓️ Web3 精选
+
+1. **SpaceX 持有 18,712 枚 BTC，价值 12.9 亿美元** — IPO 文件披露大量比特币持仓。
+2. **美联储提议为加密公司开放有限主账户** — 推进瘦账户方案，利好加密行业。
+3. **Polymarket 推出串关投注，SEC 就预测市场 ETF 征求意见** — 预测市场持续扩张。
+
+---
+
+## 🚀 OPC 精选
+
+1. **OpenAI 模型推翻离散几何核心猜想** — HN 622 分，引发广泛讨论。
+2. **SpaceX S-1 上市文件全文公开** — 史上最大 IPO 之一，176 分热议。
+3. **Google 向互联网宣战** — 分析 Google 如何通过 AI 改变互联网生态。
+
+---
+
+## 🦀 Claw 精选
+
+1. **OpenClaw v2026.5.20-beta.1 发布** — 最新版本更新。
+2. **OpenClaw 2026.5.19 稳定版** — Agent 重构策略改进，依赖更新。
+3. **OpenClaw 2026.5.18 稳定版** — Control UI 和 Mac App 重大改进。
+
+---
+
+> 💡 每日早报由 daily-news skill 自动生成
