@@ -1,51 +1,37 @@
 ---
-title: Morning Brief - 2026-05-23
-date: 2026-05-23
-description: 每日新闻简报
+title: Morning Brief 2026-05-24
+date: 2026-05-24
+description: 每日早报 - 科技、Web3、超级个体资讯
+tags: ['早报', 'morning-brief']
 ---
 
-# ☀️ Morning Brief - 2026-05-23
+# 🌅 Morning Brief
 
-> 每日精选，快速了解全球科技与加密资讯
+> 2026-05-24 星期一
 
----
+## 🤖 AI 头条
 
-## 🤖 AI 要闻
+- **SolarSquare 洽谈 6000 万美元融资**，印度屋顶太阳能市场吸引风投巨头关注
+- **马斯克放弃地球太阳能计划**，xAI 全力押注天然气，SpaceX 痴迷轨道数据中心
+- **AI 被用于复活已故飞行员声音**，NTSB 被迫封锁档案系统
 
-1. **AI正被用于“复活”已故飞行员的声音** - AI语音克隆技术重现已故飞行员声音，引发伦理讨论
-2. **SpaceX首次发射Starship V3，助推器返回时坠毁** - 重大升级版首发成功，但回收失败
-3. **Google重新设计搜索框，25年来首次大改** - I/O大会宣布搜索体验变革，整合更多AI功能
+## ⛓ Web3 头条
 
----
+- **特朗普宣布伊朗和平协议**，比特币应声上涨
+- **比特币跌至 74,300 美元**，现货 ETF 两周流失 22.6 亿美元
+- **F2Pool 创始人将领导 SpaceX 首次火星任务**
 
-## ⛓️ Web3 要闻
+## 👤 OPC 头条
 
-1. **F2Pool创始人将带领首个SpaceX火星任务** - 掌控比特币11%算力的挖矿池创始人跨界航天
-2. **SEC委员Peirce反驳加密货币规则将导致合成代币** - 强调监管规则的合理性和必要性
-3. **国会对Polymarket和Kalshi发起内幕交易调查** - 预测市场平台面临监管压力
+- **德州女子因 Facebook 发帖质疑水质被捕**，引发 585 分热议
+- **WriterDeck 专注写作硬件**获 HN 227 分讨论
+- **逆向工程 1980 年代 Spacelab 计算机电路**，Ken Shirriff 新作
 
----
+## 🦀 Claw 更新
 
-## 📰 OPC 要闻
-
-1. **Models.dev：开源AI模型规格数据库** - 汇总各种AI模型的规格、价格和能力对比
-2. **域名伪装注入攻击在多智能体系统中逃避检测** - 新型安全威胁需要关注
-3. **开源Kanban桌面应用，在每个卡片上运行并行智能体** - 提高工作流效率的新工具
-
----
-
-## 📈 GitHub 趋势
-
-1. **[MoonshotAI/kimi-code](https://github.com/MoonshotAI/kimi-code)** ⭐161 - Moonshot AI推出Kimi编程助手
-2. **[0xSero/codex-shim](https://github.com/0xSero/codex-shim)** ⭐219 - Codex API兼容层，允许替换模型
-3. **[Tong89/smartNode](https://github.com/Tong89/smartNode)** ⭐245 - 智能节点管理工具
+- **openclaw v2026.5.23-alpha.1** 发布
+- **2026.5.22-beta.1** 文档更新：WhatsApp 恢复、Gateway 故障排查等
 
 ---
 
-## 🦀 Claw (OpenClaw)
-
-近期持续更新：v2026.5.22-beta.1、v2026.5.21-beta.1等多个版本发布。
-
----
-
-> 自动收集于 2026-05-23 | [查看详情](/ai/2026-05-23-daily)
+> 完整资讯：[AI](/ai/2026-05-24-daily) | [Web3](/web3/2026-05-24-daily) | [OPC](/opc/2026-05-24-daily) | [Claw](/claw/2026-05-24-daily)
